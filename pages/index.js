@@ -1,65 +1,61 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+// services
+import AnimalsProvisioning from '../services/provisioning/animals.js';
+import Database from '../services/data.js';
+import QuestionsEngine from '../services/questions.js';
+import QuestionsProvisioning from '../services/provisioning/questions.js';
+
+
+// components
+import HtmlHead from 'next/head';
+import Head from '../components/Head.js';
+import Deck from '../components/Deck.js';
+import StartButton from '../components/StartButton.js';
+import QuestionsSet from '../components/QuestionsSet.js';
+
+// react
+import { useEffect, useState } from 'react';
+
 
 export default function Home() {
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+  // generación de las propiedades y preguntas que pueden tener los animales
+  const Questions = new QuestionsEngine();
+  
+  // creación de los animals
+  const Animals = new Database();
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+  useEffect(() => {
+    QuestionsProvisioning(Questions);
+    AnimalsProvisioning(Animals);
+  }, []);
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+  const [hasGameStarted, setHasGameStarted] = useState(false);
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
 
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+  return <>
+    <HtmlHead>
+      <title>Animals</title>
+      <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.css" rel="stylesheet" />
+    </HtmlHead>
+    <Head />
+    {hasGameStarted === false &&
+      <>
+        <section className={'section'}>
+          <Deck />
+        </section>
+        <section className={'section'}>
+          <div className={'container'}>
+            <StartButton launch={() => setHasGameStarted(true)} />
+          </div>
+        </section>
+      </>
+    }
+    {hasGameStarted &&
+      <section className={'section'}>
+        <div className={'container'}>
+          <QuestionsSet />
         </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
+      </section>
+    }
+  </>;
 }
