@@ -4,10 +4,10 @@ let keysSelected = [
 
 export default function Engine(animalsService, questionsService) {
 
+    let keysIgnored = ['id', 'name', 'imageUrl'];
+
     let animals = [...animalsService.find()];
     let questions = questionsService;
-
-    let keysIgnored = ['id', 'name', 'imageUrl'];
     
     return {
         hasBeenResolved() {
@@ -19,38 +19,32 @@ export default function Engine(animalsService, questionsService) {
         },
 
         next() {
-            // elegir un animal aleatorio de la colección
-            const animalsLength = animals.length;
-            const animalIndex = Math.floor(Math.random() * (animalsLength-1));
-            const animalChoosen = animals[animalIndex];
+            // collect all properties from all animals without repetition
+            let allProperties = new Set();
+            animals.forEach(animal => {
+                const animalProperties = Object.keys(animal);
+                animalProperties.forEach(prop => {
+                    allProperties.add(prop);
+                });
+            });
 
-            let key = '';
-            let hasKeyBeingSelected = true;
-            let doesKeyBelongToIgnoredKeys = true;
-
-            // TODO: Revisar proceso para no caer en un bucle infinito de elección de propiedades
-            while(hasKeyBeingSelected || doesKeyBelongToIgnoredKeys)  {
-                // elegir una propiedad de forma aleatoria
-                const properties = Object.keys(animalChoosen);
-                const propertyIndex = Math.floor(Math.random() * (properties.length-1));
-                key = properties[propertyIndex];
-
-                // comprobamos si ya la hemos elegido anteriormente para repetir proceso
-                hasKeyBeingSelected = keysSelected.filter(i => i.key === key).length > 0;
-                
-                // comprobamos si la key debe ser ignorada
-                doesKeyBelongToIgnoredKeys = keysIgnored.includes(key);
-            }
-
-            keysSelected.push({
-                key: key
+            // remove ignored keys from the collection
+            keysIgnored.forEach(key => {
+                allProperties.delete(key);
             });
             
-            
-            // consultar la pregunta en base a la propiedad
+            // remove previously selected keys from the collection
+            keysSelected.forEach(key => {
+                allProperties.delete(key.key);
+            });
+
+            // choose one key randomly
+            const propertyIndex = Math.floor(Math.random() * (allProperties.size-1));
+            let key = [...allProperties][propertyIndex];
+            keysSelected.push({ key: key });
+
             const { question, answers } = questions.get(key);
 
-            // devolver la pregunta y los posibles valores
             return {
                 key: key,
                 question: question,

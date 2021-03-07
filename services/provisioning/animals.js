@@ -4,6 +4,7 @@ export default function AnimalsProvisioning(service) {
         tipo: 'Mamífero',
         trompa: 'Sí',
         habitat: 'Tierra',
+        veneno: 'No',
         imageUrl: '/assets/Elephant_128.png'
     });
     
@@ -13,6 +14,7 @@ export default function AnimalsProvisioning(service) {
         cuello_largo: 'Sí',
         domestico: 'No',
         habitat: 'Tierra',
+        veneno: 'No',
         imageUrl: '/assets/Elephant_128.png'
     });
 
@@ -21,6 +23,7 @@ export default function AnimalsProvisioning(service) {
         tipo: 'Mamífero',
         domestico: 'Sí',
         habitat: 'Tierra',
+        veneno: 'No',
         imageUrl: '/assets/Elephant_128.png'
     });
     
@@ -29,6 +32,7 @@ export default function AnimalsProvisioning(service) {
         tipo: 'Ave',
         domestico: 'No',
         habitat: 'Tierra',
+        veneno: 'No',
         imageUrl: '/assets/Elephant_128.png'
     });
     
@@ -37,6 +41,7 @@ export default function AnimalsProvisioning(service) {
         tipo: 'Pez',
         domestico: 'No',
         habitat: 'Agua',
+        veneno: 'No',
         imageUrl: '/assets/Elephant_128.png'
     });
     
@@ -56,6 +61,7 @@ export default function AnimalsProvisioning(service) {
         domestico: 'No',
         habitat: 'Tierra',
         cambiaColor: 'Sí',
+        veneno: 'No',
         imageUrl: '/assets/Chamaleon_128.png'
     });
     

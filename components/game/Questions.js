@@ -10,10 +10,6 @@ export default function Questions(props) {
     const [activeQuestion, setActiveQuestion] = useState(null);
 
     useEffect(() => {
-        setActiveQuestion(engine.next());
-    }, []);
-
-    useEffect(() => {
         setQuestionsAnswered([]);
         setActiveQuestion(engine.next());
     }, [engine])
@@ -22,29 +18,37 @@ export default function Questions(props) {
         {questionsAnswered.map((q, index) => <Question key={index} question={q} />)}
 
         {null !== activeQuestion && <ActiveQuestion question={activeQuestion} provideAnswer={(value) => {
-            // tengo que guardar la respuesta dada
-            engine.save(activeQuestion.key, value);
+            try {
+                // tengo que guardar la respuesta dada
+                engine.save(activeQuestion.key, value);
 
-            // tengo que comprobar si sólo queda un animal
-            if(engine.hasBeenResolved()) {
-                // mostrar la respuesta
-                const solution = engine.get();
-                
-                if(null !== props.solve) {
-                    props.solve(solution);
+                // tengo que comprobar si sólo queda un animal
+                const hasBeenResolved = engine.hasBeenResolved();
+
+                if(hasBeenResolved) {
+                    // mostrar la respuesta
+                    const solution = engine.get();
+                    
+                    if(null !== props.onSolve) {
+                        props.onSolve(solution);
+                    }
+                    return;
                 }
-                return;
-            }
-            
-            // tengo que actualizar la visualización de las respuestas
-            setQuestionsAnswered([...questionsAnswered, {
-                text: activeQuestion.question,
-                value: value
-            }]);
+                
+                
+                // tengo que actualizar la visualización de las respuestas
+                setQuestionsAnswered([...questionsAnswered, {
+                    text: activeQuestion.question,
+                    value: value
+                }]);
 
-            // tengo que obtener la nueva pregunta
-            // tengo que asignar la nueva pregunta a la pregunta activa
-            setActiveQuestion(engine.next());
+                // tengo que asignar la nueva pregunta a la pregunta activa
+                const nextQuestion = engine.next();
+                setActiveQuestion(nextQuestion);
+
+            } catch(err) {
+                console.error('>>> [ActiveQuestion] provideAnswer', err);
+            }
         }}/>}
     </>;
 }

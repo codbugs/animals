@@ -19,7 +19,7 @@ export default function Game(props) {
     return <div className={'colums is-multiline ' + styles.columns}>
         <div className={'column is-full'}>
             <Title />
-            <Questions engine={engine} solve={(animal) => {
+            <Questions engine={engine} onSolve={(animal) => {
                 setSolution(animal);
                 setIsSolutionActive(true);
                 // engine.reset();
