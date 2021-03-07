@@ -1,8 +1,5 @@
+import styles from './Title.module.css';
+
 export default function Title() {
-    return <h1 className={'title is-uppercase'} style={{
-        fontFamily: 'Oswald',
-        fontSize: '70pt',
-        fontWeight: '700',
-        letterSpacing: '10pt'
-    }}>Animals</h1>
+    return <h1 className={'title is-uppercase ' + styles.title}>Animals</h1>;
 }
