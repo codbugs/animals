@@ -1,18 +1,13 @@
-import Database from './data.js';
-import QuestionsEngine from './questions.js';
-
 let keysSelected = [
     // { key: 'type', answer: 'Mamifero' }
 ];
 
-// TODO: Refactorizar para no tener los animales en global
-let animals = Database().find();
+export default function Engine(animalsService, questionsService) {
 
-export default function Engine() {
+    let animals = [...animalsService.find()];
+    let questions = questionsService;
 
-    let questions = new QuestionsEngine();
-
-    let keysIgnored = ['id', 'name'];
+    let keysIgnored = ['id', 'name', 'imageUrl'];
     
     return {
         hasBeenResolved() {
@@ -61,6 +56,11 @@ export default function Engine() {
                 question: question,
                 answers: answers
             };
+        },
+
+        reset() {
+            keysSelected = [];
+            animals = [...animalsService.find()];
         },
 
         save(questionKey, answer) {

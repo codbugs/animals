@@ -9,7 +9,22 @@ export default function Answer(props) {
 
     const question = new QuestionsEngine().get(key);
 
-    return <div className={'columns is-centered'}>
-        <div className={'column is-6'}>{question.question} - {currentAnswer}</div>
-    </div>;
+    return (
+        <div className={'box'}>
+            <div className={'columns is-vcentered'}>
+                <div className={'column is-6 has-text-right'}>
+                    <p className={'has-text-grey'}>{question.question}</p>
+                </div>
+                <div className={'column is-6'}>
+                    <div className={'buttons'}>
+                        {question.answers.map((answer, index) => {
+                            const isThisAnswerTheCurrentAnswer = answer === currentAnswer;
+
+                            return (isThisAnswerTheCurrentAnswer &&
+                                <button key={index} type={'button'} className={'button is-primary is-light'}>{answer}</button>);
+                        })}
+                    </div>
+                </div>
+            </div>
+        </div>);
 }

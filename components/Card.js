@@ -10,13 +10,9 @@ export default function Card(props) {
         </div>
         <div className={'card-content'}>
             <div className={'media'}>
-                <div className={'media-content'}>
-                    <p className={'title is-4'}>{ animal.name }</p>
-                    <p className={'subtitle is-6'}>{ animal.tipo }</p>
+                <div className={'media-content has-text-centered'}>
+                    <p className={'is-5'}>{ animal.name }</p>
                 </div>
-            </div>  
-            <div className={'content'}>
-                { animal.description }
             </div>
         </div>
     </div>;

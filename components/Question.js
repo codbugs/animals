@@ -28,17 +28,15 @@ export default function Question(props) {
     return <>
         {null === question && <ThinkingQuestion />}
         {null !== question &&
-            <div className={'columns is-centered'}>
-                <div className={'column is-8'}>
-                    <div className={'container has-text-centered'}>
-                        <div className={'field is-horizontal is-grouped-centered'}>
-                            <label className={'label'}>{question.question}</label>
-                            {question.answers.map((answer, index) => {
-                                return <div className={'control'}>
-                                        <button key={index} type={'button'} className={'button'} onClick={() => answerButtonClick(answer)}>{answer}</button>
-                                    </div>;
-                            })}
-                        </div>
+            <div className={'columns is-multiline'}>
+                <div className={'column is-12 has-text-centered has-text-weight-bold'}>
+                    <p>{question.question}</p>
+                </div>
+                <div className={'column is-12'}>
+                    <div className={'buttons is-centered'}>
+                        {question.answers.map((answer, index) => {
+                            return <button key={index} type={'button'} className={'button is-primary is-outlined'} onClick={() => answerButtonClick(answer)}>{answer}</button>;
+                        })}
                     </div>
                 </div>
             </div>}

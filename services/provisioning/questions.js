@@ -42,7 +42,7 @@ export default function QuestionsProvisioning(engine) {
       engine.create({
         key: 'tipo',
         question: '¿Qué tipo de animal has pensado?',
-        answers: ['Mamífero', 'Ave', 'Pez', 'Insecto'],
+        answers: ['Mamífero', 'Ave', 'Pez', 'Insecto', 'Reptil'],
         filter: (animal, answer) => {
           return animal['tipo'] === answer;
         }
@@ -54,6 +54,33 @@ export default function QuestionsProvisioning(engine) {
         answers: ['Tierra', 'Aire', 'Agua'],
         filter: (animal, answer) => {
           return animal['habitat'] === answer;
+        }
+      });
+    
+      engine.create({
+        key: 'veneno',
+        question: '¿Tiene veneno?',
+        answers: ['Sí', 'No'],
+        filter: (animal, answer) => {
+          return animal['veneno'] === answer || Object.keys(animal).includes('veneno') === false;
+        }
+      });
+    
+      engine.create({
+        key: 'cambiaColor',
+        question: '¿Puede cambiar de color?',
+        answers: ['Sí', 'No'],
+        filter: (animal, answer) => {
+          return animal['cambiaColor'] === answer || Object.keys(animal).includes('cambiaColor') === false;
+        }
+      });
+    
+      engine.create({
+        key: 'tipoPico',
+        question: '¿Qué tipo de pico tiene?',
+        answers: ['Pato', 'Otro'],
+        filter: (animal, answer) => {
+          return animal['tipoPico'] === answer || Object.keys(animal).includes('tipoPico') === false;
         }
       });
 }

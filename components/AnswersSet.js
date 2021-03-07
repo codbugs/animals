@@ -8,7 +8,7 @@ export default function AnswersSet(props) {
 
     return <>
         {answers.map(a => {
-            return <Answer id={a.key} answer={a.answer} />;
+            return <Answer key={a.key} id={a.key} answer={a.answer} />;
         })}
     </>;
 }

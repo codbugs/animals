@@ -1,8 +1,10 @@
-const questions = [
+let questions = [
     // { key: '', question: '', answers: [] }
 ];
 
 export default function QuestionsEngine() {
+
+    // questions = [];
 
     return {
         create(question) {

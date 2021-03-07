@@ -12,9 +12,9 @@ import ShowAnimal from './ShowAnimal.js';
 import { useState } from 'react';
 
 
-export default function QuestionsSet() {
+export default function QuestionsSet(props) {
 
-    const game = new Engine();
+    const [game, setGame] = useState(new Engine());
     const [answers, setAnswers] = useState([]);
     const [resetQuestion, setResetQuestion] = useState(false);
     const [solution, setSolution] = useState(null);
@@ -30,11 +30,18 @@ export default function QuestionsSet() {
 
     return <>
         <AnswersSet answers={answers} />
-        {null === solution &&
-            <Question reset={resetQuestion} setAnswer={processAnswer} />
+        {null === solution && (
+            <>
+                {answers.length > 0 && <hr />}
+                <Question reset={resetQuestion} setAnswer={processAnswer} />
+            </>)
         }
-        {null !== solution &&
-            <ShowAnimal animal={solution}/>
-        }
+        <ShowAnimal animal={solution} active={null !== solution} reset={() => {
+            setGame(new Engine());
+            setAnswers([]);
+            setResetQuestion(previosValue => !previosValue);
+            setSolution(null);
+            props.endGame && props.endGame();
+        }}/>
     </>;
 }
