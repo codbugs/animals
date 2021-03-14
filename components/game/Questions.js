@@ -2,12 +2,14 @@ import { useEffect, useState } from 'react';
 
 import ActiveQuestion from './ActiveQuestion.js';
 import Question from './Question.js';
+import ResetButton from './ResetButton.js';
 
 export default function Questions(props) {
     
     const engine = props.engine;
     const [questionsAnswered, setQuestionsAnswered] = useState([]);
     const [activeQuestion, setActiveQuestion] = useState(null);
+    const [isResetButtonVisible, setIsResetButtonVisible] = useState(false);
 
     useEffect(() => {
         setQuestionsAnswered([]);
@@ -31,6 +33,7 @@ export default function Questions(props) {
                     
                     if(null !== props.onSolve) {
                         props.onSolve(solution);
+                        setIsResetButtonVisible(true);
                     }
                     return;
                 }
@@ -50,5 +53,12 @@ export default function Questions(props) {
                 console.error('>>> [ActiveQuestion] provideAnswer', err);
             }
         }}/>}
+
+        {isResetButtonVisible && <ResetButton action={() => {
+            setIsResetButtonVisible(false);
+            engine.reset();
+            setQuestionsAnswered([]);
+            setActiveQuestion(engine.next());
+        }} />}
     </>;
 }

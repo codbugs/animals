@@ -22,7 +22,6 @@ export default function Game(props) {
             <Questions engine={engine} onSolve={(animal) => {
                 setSolution(animal);
                 setIsSolutionActive(true);
-                // engine.reset();
             }}/>
             <Solution url={solution && solution.imageUrl} name={solution && solution.name} isActive={isSolutionActive} onClosing={() => {
                 setIsSolutionActive(false);
