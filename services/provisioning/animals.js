@@ -6,12 +6,12 @@ export default function AnimalsProvisioning(service) {
     
     service.create({
         name: 'Jirafa', tipo: 'Mamífero', cuello_largo: 'Sí', habitat: 'Tierra', herbivoro: 'Sí',
-        imageUrl: '/assets/Elephant_128.png'
+        imageUrl: '/assets/Giraffe_128.png'
     });
     
     service.create({
         name: 'León', tipo: 'Mamífero', carnivoro: 'Sí', melena: 'Sí', felino: 'Sí', habitat: 'Tierra',
-        imageUrl: '/assets/Elephant_128.png'
+        imageUrl: '/assets/Lion_128.png'
     });
     
     service.create({
