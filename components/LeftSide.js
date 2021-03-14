@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import Landing from './landing/Landing.js';
-import Game from './game/game.js';
+import Game from './game/Game.js';
 
 export default function LeftSide(props) {
 
